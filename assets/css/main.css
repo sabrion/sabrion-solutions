@@ -150,7 +150,20 @@ h1,h2,h3,h4,h5,h6 { color: var(--heading-color); font-family: var(--heading-font
 .scroll-top{position:fixed;visibility:hidden;opacity:0;right:15px;bottom:-15px;z-index:99999;background:var(--accent-color);width:44px;height:44px;border-radius:50px;transition:all .4s}
 .scroll-top i{font-size:24px;color:var(--contrast-color);line-height:0}
 .scroll-top:hover{background:color-mix(in srgb,var(--accent-color),transparent 20%);color:var(--contrast-color)}
-.scroll-top.active{visibility:visible;opacity:1;bottom:15px}
+/* FIX 2 — Universal lift so it doesn't overlap side email popup */
+.scroll-top.active{
+  visibility: visible;
+  opacity: 1;
+  bottom: 200px;   /* was 15px */
+}
+
+/* Slightly more lift on small screens */
+@media (max-width: 576px){
+  .scroll-top.active{
+    bottom: 220px;
+    right: 12px;  /* optional: small nudge if needed */
+  }
+}
 
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
@@ -184,6 +197,34 @@ section,.section{color:var(--default-color);background:var(--background-color);p
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
+/* Contact Section — match Hero background */
+#contact.section {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    var(--surface-color) 0%,
+    color-mix(in srgb, var(--accent-color), transparent 95%) 100%
+  );
+}
+
+#contact.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 20% 80%,
+    color-mix(in srgb, var(--accent-color), transparent 90%) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+/* keep content above the overlay */
+#contact .container {
+  position: relative;
+  z-index: 1;
+}
 .hero{padding:140px 0 60px 0;background:linear-gradient(135deg,var(--surface-color) 0%, color-mix(in srgb,var(--accent-color),transparent 95%) 100%);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 80%, color-mix(in srgb,var(--accent-color),transparent 90%) 0%, transparent 50%);pointer-events:none}
 .hero .hero-content{padding:20px 0}
@@ -674,3 +715,12 @@ section,.section{color:var(--default-color);background:var(--background-color);p
 # Starter Section Section
 --------------------------------------------------------------*/
 .starter-section{ /* Add your styles here */ }
+
+/* FIX 1 — Solid header on mobile to avoid hero-image showing through */
+@media (max-width: 767px){
+  .header{
+    --background-color: #ffffff; /* overrides the transparent var on mobile */
+    box-shadow: 0 0 18px rgba(0,0,0,.08); /* optional: keeps same scrolled look */
+  }
+}
+
