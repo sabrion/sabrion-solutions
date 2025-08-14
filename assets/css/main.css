@@ -80,6 +80,11 @@ h1,h2,h3,h4,h5,h6 { color: var(--heading-color); font-family: var(--heading-font
 .scrolled .header{box-shadow:0 0 18px rgba(0,0,0,.1)}
 .scrolled .header{--background-color:#ffffff}
 .index-page.scrolled .header{--background-color:#ffffff}
+/* Ensure transparent header before scroll on the home page */
+.index-page:not(.scrolled) .header {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -197,6 +202,20 @@ section,.section{color:var(--default-color);background:var(--background-color);p
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
+/* Fix: make Hero clear the fixed topbar + header on mobile */
+@media (max-width: 991.98px){
+  .hero { 
+    /* was 60px in your mobile rule; increase to clear ~topbar(44) + header(~72) */
+    padding-top: 140px;
+  }
+}
+
+@media (max-width: 575.98px){
+  .hero {
+    /* a little extra on very small phones */
+    padding-top: 160px;
+  }
+}
 /* Contact Section — match Hero background */
 #contact.section {
   position: relative;
